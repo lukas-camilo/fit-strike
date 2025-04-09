@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "299883767240",
+    "project_id": "fit-strike",
+    "storage_bucket": "fit-strike.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299883767240:android:84b9d010c9137d4bb9ccfd",
+        "android_client_info": {
+          "package_name": "com.lucascamilo.fitstrike"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-jTHnOSMMOU9Zah3B4e6AdeMuznFA9k0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
