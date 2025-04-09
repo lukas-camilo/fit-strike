@@ -33,16 +33,42 @@
         app:layout_constraintTop_toTopOf="@id/imvPhotoUser"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <TextView
-        android:id="@+id/txvUserName"
-        android:layout_width="wrap_content"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerUserName"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Lucas"
+        app:shimmer_auto_start="true"
+        app:shimmer_duration="1500"
+        app:layout_constraintTop_toBottomOf="@id/txvWelcome"
+        app:layout_constraintLeft_toLeftOf="@id/txvWelcome"
+        app:layout_constraintRight_toLeftOf="@id/imvPhotoUser">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="24sp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"/>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txvUserName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textSize="42sp"
         android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="42sp"
+        android:autoSizeStepGranularity="2sp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintTop_toBottomOf="@id/txvWelcome"
-        app:layout_constraintLeft_toLeftOf="@id/txvWelcome" />
+        app:layout_constraintLeft_toLeftOf="@id/txvWelcome"
+        app:layout_constraintRight_toLeftOf="@id/imvPhotoUser" />
 
     <ScrollView
         android:layout_width="0dp"

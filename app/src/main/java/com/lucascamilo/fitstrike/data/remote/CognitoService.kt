@@ -4,6 +4,7 @@ import android.content.Context
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationContinuation
@@ -13,6 +14,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Mult
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.VerificationHandler
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.cognitoidentityprovider.model.SignUpResult
@@ -22,6 +24,7 @@ import com.lucascamilo.fitstrike.domain.exception.ResendVerificationCodeRequired
 import com.lucascamilo.fitstrike.domain.exception.VerificationCodeRequiredException
 
 import com.lucascamilo.fitstrike.domain.model.Token
+import com.lucascamilo.fitstrike.domain.model.User
 
 class CognitoService(
     context: Context
@@ -37,7 +40,7 @@ class CognitoService(
     fun login(
         username: String,
         password: String,
-        onSuccess: (Token) -> Unit,
+        onSuccess: (User) -> Unit,
         onError: (Exception) -> Unit
     ) {
         val user = userPool.getUser(username)
@@ -48,7 +51,26 @@ class CognitoService(
                         accessToken = userSession.accessToken.jwtToken,
                         refreshToken = userSession.refreshToken.token
                     )
-                    onSuccess(token)
+
+                    user.getDetailsInBackground(object : GetDetailsHandler {
+                        override fun onSuccess(userDetails: CognitoUserDetails?) {
+                            val userName = userDetails?.attributes?.attributes?.get("name")
+                            if (userName != null) {
+                                val userObject = User(
+                                    name = userName,
+                                    token = token
+                                )
+
+                                onSuccess(userObject)
+                            } else {
+                                onError(Exception("User name not found"))
+                            }
+                        }
+
+                        override fun onFailure(exception: Exception?) {
+                            onError(Exception("Generic Exception"))
+                        }
+                    })
                 } else {
                     onError(Exception("User session is null"))
                 }
@@ -122,11 +144,13 @@ class CognitoService(
     fun registerUser(
         email: String,
         password: String,
+        name: String,
         onSuccess: (String) -> Unit,
         onError: (Exception) -> Unit
     ) {
         val userAttributes = com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes()
         userAttributes.addAttribute("email", email)
+        userAttributes.addAttribute("name", name)
 
         userPool.signUpInBackground(
             email,

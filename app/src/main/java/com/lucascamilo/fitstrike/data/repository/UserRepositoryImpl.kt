@@ -1,16 +1,20 @@
 package com.lucascamilo.fitstrike.data.repository
 
-import com.lucascamilo.fitstrike.data.local.TokenStorage
+import com.lucascamilo.fitstrike.data.local.SecurePreferences
 import com.lucascamilo.fitstrike.data.remote.CognitoService
-import com.lucascamilo.fitstrike.domain.model.Token
-import com.lucascamilo.fitstrike.domain.repository.TokenRepository
+import com.lucascamilo.fitstrike.domain.model.User
+import com.lucascamilo.fitstrike.domain.repository.UserRepository
 
-class TokenRepositoryImpl(
-    private val tokenStorage: TokenStorage,
+class UserRepositoryImpl(
+    private val tokenStorage: SecurePreferences,
     private val cognitoService: CognitoService
-) : TokenRepository {
-    override suspend fun saveToken(token: Token) {
-        tokenStorage.saveToken(token.accessToken, token.refreshToken)
+) : UserRepository {
+    override suspend fun saveUser(user: User) {
+        tokenStorage.saveUser(user)
+    }
+
+    override suspend fun getUserName(): String? {
+        return tokenStorage.getUserName()
     }
 
     override suspend fun getAccessToken(): String? {

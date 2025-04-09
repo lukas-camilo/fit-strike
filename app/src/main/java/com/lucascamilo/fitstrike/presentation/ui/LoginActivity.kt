@@ -10,7 +10,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.amazonaws.services.cognitoidentityprovider.model.UserNotConfirmedException
 import com.lucascamilo.fitstrike.R
 import com.lucascamilo.fitstrike.domain.exception.ResendVerificationCodeRequiredException
 import com.lucascamilo.fitstrike.presentation.ui.dialog.ConfirmationCodeDialogFragment
@@ -50,9 +49,9 @@ class LoginActivity : AppCompatActivity() {
                 authViewModel.login(
                     username = email,
                     password = password,
-                    onResult = { token ->
+                    onResult = { user ->
                         rootView.removeView(loadingView)
-                        authViewModel.saveToken(token)
+                        authViewModel.saveUser(user)
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     },

@@ -40,6 +40,7 @@ class SignUpActivity : AppCompatActivity() {
             signUpViewModel.register(
                 email = binding.edtTextEmail.text.toString(),
                 password = binding.edtTextPassword.text.toString(),
+                name = binding.edtTextName.text.toString(),
                 onResult = {
                     finish()
                 },

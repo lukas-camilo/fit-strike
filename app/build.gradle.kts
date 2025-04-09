@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.material.v1120)
     implementation(libs.androidx.cardview)
 
+    implementation(libs.shimmer)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

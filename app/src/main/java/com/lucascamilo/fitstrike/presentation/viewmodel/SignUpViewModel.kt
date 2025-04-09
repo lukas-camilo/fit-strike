@@ -70,12 +70,13 @@ class SignUpViewModel(
     fun register(
         email: String,
         password: String,
+        name: String,
         onResult: (Any) -> Unit,
         onError: (Exception) -> Unit
     ) {
         viewModelScope.launch {
             try {
-                val result = registerUseCase(RegisterRequest(email, password))
+                val result = registerUseCase(RegisterRequest(email, password, name))
                 onResult(result)
             } catch (e: Exception) {
                 onError(e)

@@ -34,6 +34,15 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <EditText
+            android:id="@+id/edtTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:inputType="text"
+            android:textColorHint="@color/white"
+            android:hint="@string/name" />
+
+        <EditText
             android:id="@+id/edtTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

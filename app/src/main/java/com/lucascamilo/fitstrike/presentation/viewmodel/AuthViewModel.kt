@@ -3,28 +3,29 @@ package com.lucascamilo.fitstrike.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lucascamilo.fitstrike.domain.model.LoginRequest
-import kotlinx.coroutines.launch
 import com.lucascamilo.fitstrike.domain.model.Token
+import kotlinx.coroutines.launch
+import com.lucascamilo.fitstrike.domain.model.User
 import com.lucascamilo.fitstrike.domain.usecase.ConfirmationCodeUseCase
 import com.lucascamilo.fitstrike.domain.usecase.GetAccessTokenUseCase
 import com.lucascamilo.fitstrike.domain.usecase.LoginUseCase
-import com.lucascamilo.fitstrike.domain.usecase.SaveTokenUseCase
+import com.lucascamilo.fitstrike.domain.usecase.SaveUserUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AuthViewModel(
-    private val saveTokenUseCase: SaveTokenUseCase,
+    private val saveTokenUseCase: SaveUserUseCase,
     private val getAccessTokenUseCase: GetAccessTokenUseCase,
     private val confirmationCodeUseCase: ConfirmationCodeUseCase,
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
-    fun login(username: String, password: String, onResult: (Token) -> Unit, onError: (Exception) -> Unit) {
+    fun login(username: String, password: String, onResult: (User) -> Unit, onError: (Exception) -> Unit) {
         viewModelScope.launch {
             try {
-                val token = loginUseCase(LoginRequest(username, password))
+                val user = loginUseCase(LoginRequest(username, password))
                 withContext(Dispatchers.Main) {
-                    onResult(token)
+                    onResult(user)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -34,9 +35,9 @@ class AuthViewModel(
         }
     }
 
-    fun saveToken(token: Token) {
+    fun saveUser(user: User) {
         viewModelScope.launch {
-            saveTokenUseCase(token)
+            saveTokenUseCase(user)
         }
     }
 

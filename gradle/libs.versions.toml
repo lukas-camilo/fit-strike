@@ -19,6 +19,7 @@ activity = "1.8.0"
 annotation = "1.6.0"
 securityCryptoKtx = "1.1.0-alpha04"
 koinVersion = "3.5.0"
+shimmer = "0.5.0"
 
 [libraries]
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
@@ -49,6 +50,7 @@ koin-viewmodel = { group = "io.insert-koin", name ="koin-androidx-viewmodel", ve
 
 lottie = { group = "com.airbnb.android", name = "lottie", version = "6.0.0"}
 material-v1120 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
