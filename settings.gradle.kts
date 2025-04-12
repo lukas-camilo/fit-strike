@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Fit Strike"
+rootProject.name = "Capybara Fit"
 include(":app")

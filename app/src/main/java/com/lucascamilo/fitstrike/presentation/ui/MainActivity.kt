@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.lucascamilo.fitstrike.R
 import com.lucascamilo.fitstrike.databinding.ActivityMainBinding
+import com.lucascamilo.fitstrike.presentation.ui.friends.FriendsFragment
+import com.lucascamilo.fitstrike.presentation.ui.history.HistoryFragment
 import com.lucascamilo.fitstrike.presentation.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
@@ -40,8 +42,20 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     true
                 }
-//                R.id.nav_history -> HistoryFragment()
-//                R.id.nav_friends -> FriendsFragment()
+                R.id.nav_history -> {
+                    val fragment = HistoryFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .commit()
+                    true
+                }
+                R.id.nav_friends -> {
+                    val fragment = FriendsFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .commit()
+                    true
+                }
                 R.id.nav_exit -> {
                     performLogout()
                     true
